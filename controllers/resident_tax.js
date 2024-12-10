@@ -72,11 +72,16 @@ res.status(200).json(result);
 
 const updateResidentTaxByPayLimit = (req, res) => {
 const payLimit = req.params.payLimit;
+
+const price = req.body.price;
 const payDate = req.body.pay_date;
 
-const query = "UPDATE t_resident_tax SET pay_date = ? WHERE pay_limit = ?";
+const interestPrice = req.body.interest_price;
+const interestPayDate = req.body.interest_pay_date;
 
-db.query(query, [payDate, payLimit], (err, result) => {
+const query = "UPDATE t_resident_tax SET price = ?, pay_date = ?, interest_price = ?, interest_pay_date = ? WHERE pay_limit = ?";
+
+db.query(query, [price, payDate, interestPrice, interestPayDate, payLimit], (err, result) => {
 if (err) {
 console.log(err);
 
@@ -89,11 +94,16 @@ res.status(200).send("Value Updated");
 
 const updateResidentTaxByPeriod = (req, res) => {
 const period = req.params.period;
+
+const price = req.body.price;
 const payDate = req.body.pay_date;
 
-const query = "UPDATE t_resident_tax SET pay_date = ? WHERE period = ?";
+const interestPrice = req.body.interest_price;
+const interestPayDate = req.body.interest_pay_date;
 
-db.query(query, [payDate, period], (err, result) => {
+const query = "UPDATE t_resident_tax SET price = ?, pay_date = ?, interest_price = ?, interest_pay_date = ? WHERE period = ?";
+
+db.query(query, [price, payDate, interestPrice, interestPayDate, period], (err, result) => {
 if (err) {
 console.log(err);
 
