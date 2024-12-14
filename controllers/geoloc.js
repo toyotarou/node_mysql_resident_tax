@@ -30,15 +30,6 @@ const time = req.body.time;
 const latitude = req.body.latitude;
 const longitude = req.body.longitude;
 
-
-
-
-
-console.log(latitude);
-
-
-
-
 const query = "INSERT INTO t_geoloc(year, month, day, time, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?)";
 
 db.query(query, [year, month, day, time, latitude, longitude], (err, result) => {
@@ -52,7 +43,22 @@ res.status(200).json({ message: "Value Inserted" });
 });
 }
 
+const getRecentGeoloc = (req, res) => {
+const query = "SELECT * FROM t_geoloc order by id desc limit 10";
+
+db.query(query, (err, result) => {
+if (err) {
+console.log(err);
+
+res.status(500).send("Error retrieving data from database");
+} else {
+res.status(200).json(result);
+}
+});
+}
+
 module.exports = {
 getAllGeoloc,
 createGeoloc,
+getRecentGeoloc,
 };
