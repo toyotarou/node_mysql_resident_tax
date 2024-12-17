@@ -57,8 +57,27 @@ res.status(200).json(result);
 });
 }
 
+const getYearMonthGeoloc = (req, res) => {
+const yearmonth = req.params.yearmonth;
+
+var exYm = yearmonth.split('-');
+
+const query = "SELECT * FROM t_geoloc where year = ? and month = ? order by year, month, day, time";
+
+db.query(query, [exYm[0], exYm[1]], (err, result) => {
+if (err) {
+console.log(err);
+
+res.status(500).send("Error retrieving data from database");
+} else {
+res.status(200).json(result);
+}
+});
+}
+
 module.exports = {
 getAllGeoloc,
 createGeoloc,
 getRecentGeoloc,
+getYearMonthGeoloc,
 };
