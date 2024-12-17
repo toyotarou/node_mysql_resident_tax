@@ -57,7 +57,7 @@ res.status(200).json(result);
 });
 }
 
-const getYearMonthGeoloc = (req, res) => {
+const getGeolocByYearMonth = (req, res) => {
 const yearmonth = req.params.yearmonth;
 
 var exYm = yearmonth.split('-');
@@ -75,9 +75,28 @@ res.status(200).json(result);
 });
 }
 
+const deleteGeolocByDate = (req, res) => {
+const date = req.params.date;
+
+var exDate = date.split('-');
+
+const query = "DELETE FROM t_geoloc WHERE year = ? and month = ? and day = ?";
+
+db.query(query, [exDate[0], exDate[1], exDate[2]], (err, result) => {
+if (err) {
+console.log(err);
+
+res.status(500).send("Error deleting data from database");
+} else {
+res.status(200).send("Value Deleted");
+}
+});
+}
+
 module.exports = {
 getAllGeoloc,
 createGeoloc,
 getRecentGeoloc,
-getYearMonthGeoloc,
+getGeolocByYearMonth,
+deleteGeolocByDate,
 };
