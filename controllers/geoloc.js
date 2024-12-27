@@ -44,7 +44,7 @@ res.status(200).json({ message: "Value Inserted" });
 }
 
 const getRecentGeoloc = (req, res) => {
-const query = "SELECT * FROM t_geoloc order by id desc limit 10";
+const query = "SELECT * FROM t_geoloc order by year desc, month desc, day desc, time desc limit 10";
 
 db.query(query, (err, result) => {
 if (err) {
@@ -65,6 +65,20 @@ var exYm = yearmonth.split('-');
 const query = "SELECT * FROM t_geoloc where year = ? and month = ? order by year, month, day, time";
 
 db.query(query, [exYm[0], exYm[1]], (err, result) => {
+if (err) {
+console.log(err);
+
+res.status(500).send("Error retrieving data from database");
+} else {
+res.status(200).json(result);
+}
+});
+}
+
+const getOldestGeoloc = (req, res) => {
+const query = "SELECT * FROM t_geoloc order by id limit 1";
+
+db.query(query, (err, result) => {
 if (err) {
 console.log(err);
 
@@ -98,5 +112,6 @@ getAllGeoloc,
 createGeoloc,
 getRecentGeoloc,
 getGeolocByYearMonth,
+getOldestGeoloc,
 deleteGeolocByDate,
 };
