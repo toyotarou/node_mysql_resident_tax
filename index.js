@@ -19,6 +19,9 @@ app.use("/api/v1/geoloc", geolocRoute);
 const walkRecordRoute = require("./routes/walk_record");
 app.use("/api/v1/walkRecord", walkRecordRoute);
 
+const templeRoute = require("./routes/temple");
+app.use("/api/v1/temple", templeRoute);
+
 app.listen(3000, function () {
 console.log('Example app listening on port 3000!');
 })
